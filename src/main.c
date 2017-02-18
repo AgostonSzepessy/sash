@@ -21,6 +21,8 @@
 #include <stdlib.h>
 
 #include <util.h>
+#include <input.h>
+#include <command.h>
 
 int main(void)
 {
@@ -29,6 +31,19 @@ int main(void)
 
 	printf("%s@%s $", username, hostname);
 
+	char *input = read_line();
+
+	struct command *parsed_command = parse_line(input);
+
+	for(int i = 0; i < parsed_command->num_args; ++i)
+	{
+		printf("%s, ", parsed_command->args[i]);
+	}
+
+	printf("\n");
+
+	free_command(parsed_command);
+	free(input);
 	free(username);
 	free(hostname);
 

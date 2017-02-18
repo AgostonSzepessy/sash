@@ -1,10 +1,14 @@
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include/sash)
 
 set(SRC_ROOT ${PROJECT_SOURCE_DIR}/src)
-set(INC_ROOT ${PROJECT_SOURCE_DIR}/include)
+set(INC_ROOT ${PROJECT_SOURCE_DIR}/include/sash)
 
 set(SRC
 	${SRC_ROOT}/main.c
+	${SRC_ROOT}/command.c
+	${INC_ROOT}/command.h
+	${SRC_ROOT}/input.c
+	${INC_ROOT}/input.h
 	${SRC_ROOT}/util.c
 	${INC_ROOT}/util.h)
 

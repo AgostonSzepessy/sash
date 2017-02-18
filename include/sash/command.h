@@ -16,34 +16,20 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <sash/util.h>
+#ifndef COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
+#define COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
 
-#define __USE_POSIX
-#include <limits.h>
-
-#include <unistd.h>
-#include <stdlib.h>
-
-char *get_username()
+struct command
 {
-	// allocate enough space for the longest possible POSIX username plus 1 for
-	// null terminator
-	const int max_len = LOGIN_NAME_MAX + 1;
-	char *buffer = malloc(max_len * sizeof(char));
+	int num_args;
+	char **args;
+};
 
-	int status = getlogin_r(buffer, max_len);
+/**
+ * @brief free_command Frees the allocated memory that the command struct
+ * uses
+ * @param c struct to free
+ */
+void free_command(struct command *c);
 
-	return buffer;
-}
-
-char *get_hostname()
-{
-	// allocate enough space for the longest possible POSIX username plus 1 for
-	// null terminator
-	const int hostname_size = HOST_NAME_MAX + 1;
-	char *hostname = malloc(hostname_size * sizeof(char));
-
-	gethostname(hostname, HOST_NAME_MAX);
-
-	return hostname;
-}
+#endif // COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
