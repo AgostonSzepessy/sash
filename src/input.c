@@ -1,3 +1,21 @@
+/*
+	Sash is a basic Unix shell written in C.
+	Copyright (C) 2017  Agoston Szepessy
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <sash/input.h>
 #include <sash/command.h>
 
@@ -32,16 +50,26 @@ struct command *parse_line(char *input)
 		exit(1);
 	}
 
+	struct command *parsed_command = malloc(sizeof(struct command));
+
 	// break input into tokens
 	token = strtok(input, SASH_TOKEN_DELIM);
+
+	parsed_command->cmd = token;
 
 	while(token != NULL)
 	{
 		// not enough memory; reallocate for more
-		if(position == buffsize)
+		if(position >= buffsize)
 		{
 			buffsize += SASH_BUFF_SIZE;
 			tokens = realloc(tokens, sizeof(char *) * buffsize);
+
+			if(!tokens)
+			{
+				fprintf(stderr, "sash: allocation error");
+				exit(1);
+			}
 		}
 
 		tokens[position] = token;
@@ -49,8 +77,6 @@ struct command *parse_line(char *input)
 
 		token = strtok(NULL, SASH_TOKEN_DELIM);
 	}
-
-	struct command *parsed_command = malloc(sizeof(struct command));
 
 	parsed_command->num_args = position;
 	parsed_command->args = tokens;

@@ -16,73 +16,79 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <sash/command.h>
 #include <sash/builtins.h>
+#include <sash/command.h>
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <limits.h>
 
-#include <sys/types.h>
-#include <sys/wait.h>
+int (*builtin_func[]) (struct command *cmd) = {
+	&sash_cd,
+	&sash_help,
+	&sash_exit,
+	&sash_clear,
+	&sash_pwd
+};
 
-extern int (*builtin_func[]) (struct command *cmd);
-extern char *builtin_str[];
+char *builtin_str[] = {
+	"cd",
+	"help",
+	"exit",
+	"clear",
+	"pwd"
+};
 
-int launch_process(struct command *cmd)
+int sash_num_builtins()
 {
-	pid_t pid, wpid;
-	int status;
+	return sizeof(builtin_str) / sizeof(char *);
+}
 
-	pid = fork();
-
-	if(pid == 0)
+int sash_cd(struct command *cmd)
+{
+	if(cmd->args[1] == NULL)
 	{
-		// child process
-		if(execvp(cmd->cmd, cmd->args) == -1)
+		if(chdir(getenv("HOME")) != 0)
 		{
 			perror("sash");
 		}
-		exit(EXIT_FAILURE);
-	}
-
-	else if(pid < 0)
-	{
-		perror("sash:");
 	}
 	else
 	{
-		// parent process
-		do
+		if(chdir(cmd->args[1]) != 0)
 		{
-			wpid = waitpid(pid, &status, WUNTRACED);
-		} while(!WIFEXITED(status) && !WIFSIGNALED(status));
+			perror("sash");
+		}
 	}
 
 	return 1;
 }
 
-int execute_cmd(struct command *cmd)
+int sash_help(struct command *cmd)
 {
-	if(cmd->cmd == NULL)
-	{
-		return 1;
-	}
 
-	for(int i = 0; i < sash_num_builtins(); ++i)
-	{
-		if(strcmp(cmd->cmd, builtin_str[i]) == 0)
-		{
-			return (*builtin_func[i])(cmd);
-		}
-	}
-
-	return launch_process(cmd);
+	return 1;
 }
 
-void free_command(struct command *c)
+int sash_exit(struct command *cmd)
 {
-	free(c->args);
+	return 0;
+}
+
+int sash_clear(struct command *cmd)
+{
+	return 1;
+}
+
+int sash_pwd(struct command *cmd)
+{
+	char *path = malloc(sizeof(char *) * PATH_MAX + 1);
+
+	path = getcwd(path, PATH_MAX + 1);
+
+	printf("%s\n", path);
+
+	return 1;
 }

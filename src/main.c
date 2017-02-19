@@ -21,16 +21,18 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include <util.h>
-#include <input.h>
-#include <command.h>
+#include <sash/util.h>
+#include <sash/input.h>
+#include <sash/command.h>
 
 int main(void)
 {
 	char *username = get_username();
 	char *hostname = get_hostname();
 
-	while(true)
+	int status = 1;
+
+	do
 	{
 		printf("%s@%s $ ", username, hostname);
 
@@ -38,16 +40,11 @@ int main(void)
 
 		struct command *parsed_command = parse_line(input);
 
-		for(int i = 0; i < parsed_command->num_args; ++i)
-		{
-			printf("%s, ", parsed_command->args[i]);
-		}
-
-		printf("\n");
+		status = execute_cmd(parsed_command);
 
 		free_command(parsed_command);
 		free(input);
-	}
+	} while(status);
 
 	free(username);
 	free(hostname);

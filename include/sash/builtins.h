@@ -16,24 +16,17 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
-#define COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
+#ifndef BUILTINS_H_459DC012_DB5D_4D11_91FC_78ABC4E46E7F
+#define BUILTINS_H_459DC012_DB5D_4D11_91FC_78ABC4E46E7F
 
-struct command
-{
-	int num_args;
-	char *cmd;
-	char **args;
-};
+struct command;
 
-int launch_process(struct command *cmd);
-int execute_cmd(struct command *c);
+int sash_cd(struct command *cmd);
+int sash_help(struct command *cmd);
+int sash_exit(struct command *cmd);
+int sash_clear(struct command *cmd);
+int sash_pwd(struct command *cmd);
 
-/**
- * @brief free_command Frees the allocated memory that the command struct
- * uses
- * @param c struct to free
- */
-void free_command(struct command *c);
+int sash_num_builtins();
 
-#endif // COMMAND_H_DB4A3D34_5F1A_4C25_AAC5_B80866690FE7
+#endif // BUILTINS_H_459DC012_DB5D_4D11_91FC_78ABC4E46E7F
