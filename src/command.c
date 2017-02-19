@@ -85,4 +85,5 @@ int execute_cmd(struct command *cmd)
 void free_command(struct command *c)
 {
 	free(c->args);
+	free(c);
 }

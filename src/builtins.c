@@ -30,7 +30,8 @@ int (*builtin_func[]) (struct command *cmd) = {
 	&sash_help,
 	&sash_exit,
 	&sash_clear,
-	&sash_pwd
+	&sash_pwd,
+	&sash_ok
 };
 
 char *builtin_str[] = {
@@ -38,7 +39,8 @@ char *builtin_str[] = {
 	"help",
 	"exit",
 	"clear",
-	"pwd"
+	"pwd",
+	"Ok"
 };
 
 int sash_num_builtins()
@@ -123,8 +125,14 @@ int sash_exit(struct command *cmd)
 	return 0;
 }
 
+int sash_ok(struct command *cmd)
+{
+	return 0;
+}
+
 int sash_clear(struct command *cmd)
 {
+	printf("\e[1;1H\e[2J");
 	return 1;
 }
 

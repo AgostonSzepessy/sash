@@ -36,6 +36,19 @@ char *read_line(void)
 	return input;
 }
 
+static void *realloc_memory(void *mem, size_t size)
+{
+	mem = realloc(mem, sizeof(char *) * size);
+
+	if(!mem)
+	{
+		fprintf(stderr, "sash: allocation error");
+		exit(1);
+	}
+
+	return mem;
+}
+
 struct command *parse_line(char *input)
 {
 	int buffsize = SASH_BUFF_SIZE;
@@ -54,7 +67,6 @@ struct command *parse_line(char *input)
 
 	// break input into tokens
 	token = strtok(input, SASH_TOKEN_DELIM);
-
 	parsed_command->cmd = token;
 
 	while(token != NULL)
@@ -63,13 +75,7 @@ struct command *parse_line(char *input)
 		if(position >= buffsize)
 		{
 			buffsize += SASH_BUFF_SIZE;
-			tokens = realloc(tokens, sizeof(char *) * buffsize);
-
-			if(!tokens)
-			{
-				fprintf(stderr, "sash: allocation error");
-				exit(1);
-			}
+			tokens = realloc_memory(tokens, buffsize);
 		}
 
 		tokens[position] = token;
@@ -77,6 +83,14 @@ struct command *parse_line(char *input)
 
 		token = strtok(NULL, SASH_TOKEN_DELIM);
 	}
+
+	if(position >= buffsize)
+	{
+		buffsize += 1;
+		tokens = realloc_memory(tokens, buffsize);
+	}
+
+	tokens[position] = NULL;
 
 	parsed_command->num_args = position;
 	parsed_command->args = tokens;

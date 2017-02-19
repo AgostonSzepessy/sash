@@ -20,6 +20,7 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include <sash/util.h>
 #include <sash/input.h>
@@ -32,18 +33,26 @@ int main(void)
 
 	int status = 1;
 
+	char *input;
+	struct command *parsed_command;
+
 	do
 	{
 		printf("%s@%s $ ", username, hostname);
 
-		char *input = read_line();
+		input = read_line();
 
-		struct command *parsed_command = parse_line(input);
+		int input_length = strlen(input);
+
+		parsed_command = parse_line(input);
 
 		status = execute_cmd(parsed_command);
 
 		free_command(parsed_command);
+		parsed_command = NULL;
+
 		free(input);
+		input = NULL;
 	} while(status);
 
 	free(username);

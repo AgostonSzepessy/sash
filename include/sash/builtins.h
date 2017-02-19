@@ -24,6 +24,7 @@ struct command;
 int sash_cd(struct command *cmd);
 int sash_help(struct command *cmd);
 int sash_exit(struct command *cmd);
+int sash_ok(struct command *cmd);
 int sash_clear(struct command *cmd);
 int sash_pwd(struct command *cmd);
 
