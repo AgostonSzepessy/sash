@@ -17,7 +17,9 @@ You will need the following installed on your computer:
 # Running
 The binaries are placed into `sash_build/bin`. To run `sash`:
 
-```sash_build/bin/sash```
+```
+sash_build/bin/sash
+```
 
 To run the tests:
 * `cd sash_build`
