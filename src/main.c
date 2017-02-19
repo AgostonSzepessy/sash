@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include <util.h>
 #include <input.h>
@@ -29,21 +30,25 @@ int main(void)
 	char *username = get_username();
 	char *hostname = get_hostname();
 
-	printf("%s@%s $ ", username, hostname);
-
-	char *input = read_line();
-
-	struct command *parsed_command = parse_line(input);
-
-	for(int i = 0; i < parsed_command->num_args; ++i)
+	while(true)
 	{
-		printf("%s, ", parsed_command->args[i]);
+		printf("%s@%s $ ", username, hostname);
+
+		char *input = read_line();
+
+		struct command *parsed_command = parse_line(input);
+
+		for(int i = 0; i < parsed_command->num_args; ++i)
+		{
+			printf("%s, ", parsed_command->args[i]);
+		}
+
+		printf("\n");
+
+		free_command(parsed_command);
+		free(input);
 	}
 
-	printf("\n");
-
-	free_command(parsed_command);
-	free(input);
 	free(username);
 	free(hostname);
 

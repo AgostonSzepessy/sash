@@ -1,12 +1,14 @@
 #include <check.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <sash/input.h>
 #include <sash/command.h>
 
 START_TEST(test_input_parsing)
 {
-	char *input = "echo hello world";
+	char *input = malloc(sizeof("echo hello world"));
+	strcpy(input, "echo hello world");
 
 	struct command *parsed_input = parse_line(input);
 
