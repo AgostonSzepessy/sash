@@ -4,7 +4,7 @@ set(SRC_ROOT ${PROJECT_SOURCE_DIR}/src)
 set(INC_ROOT ${PROJECT_SOURCE_DIR}/include/sash)
 
 set(SRC
-	${SRC_ROOT}/main.c
+        ${SRC_ROOT}/main.c
 	${SRC_ROOT}/command.c
 	${INC_ROOT}/command.h
 	${SRC_ROOT}/input.c

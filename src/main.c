@@ -29,7 +29,7 @@ int main(void)
 	char *username = get_username();
 	char *hostname = get_hostname();
 
-	printf("%s@%s $", username, hostname);
+	printf("%s@%s $ ", username, hostname);
 
 	char *input = read_line();
 
