@@ -12,6 +12,9 @@ set(SRC
 	${SRC_ROOT}/input.c
 	${INC_ROOT}/input.h
 	${SRC_ROOT}/util.c
-	${INC_ROOT}/util.h)
+	${INC_ROOT}/util.h
+	${INC_ROOT}/uthash.h
+	${SRC_ROOT}/variable.c
+	${INC_ROOT}/variable.h)
 
 add_executable(sash ${SRC})
