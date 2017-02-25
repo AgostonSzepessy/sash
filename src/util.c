@@ -23,6 +23,8 @@
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
 char *get_username()
 {
@@ -46,4 +48,34 @@ char *get_hostname()
 	gethostname(hostname, HOST_NAME_MAX);
 
 	return hostname;
+}
+
+char *strip_str(char *input)
+{
+	int original_len = strlen(input);
+
+	// no space to trim
+	if(original_len == 0) return input;
+
+	char *beginning = input;
+
+	// remove space from beginning
+	while(isspace((unsigned char) *input)) beginning++;
+
+	char *end = beginning + original_len - 1;
+
+	// remove whitespace from end
+	while(end > beginning && isspace((unsigned char) *input)) end--;
+
+	// write null terminator
+	*(end+1) = '\0';
+
+	int new_len = strlen(beginning);
+
+	char *output = malloc(new_len * sizeof(char *));
+	strcpy(output, beginning);
+
+	free(input);
+
+	return output;
 }

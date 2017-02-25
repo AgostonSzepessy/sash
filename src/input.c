@@ -18,6 +18,8 @@
 
 #include <sash/input.h>
 #include <sash/command.h>
+#include <sash/variable.h>
+#include <sash/util.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -25,6 +27,13 @@
 
 #define SASH_BUFF_SIZE 64
 #define SASH_TOKEN_DELIM " \r\n\t"
+
+struct variable *parse_variable(char *input)
+{
+	char *stripped_input = strip_str(input);
+
+	return NULL;
+}
 
 char *read_line(void)
 {

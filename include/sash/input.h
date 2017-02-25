@@ -20,6 +20,7 @@
 #define INPUT_H_2C6A9CFE_83FE_4419_BEFD_E4B888681E1D
 
 struct command;
+struct variable;
 
 /**
  * @brief read_line Reads a line from stdin
@@ -33,5 +34,7 @@ char *read_line(void);
  * @return array of inputs split by whitespace
  */
 struct command *parse_line(char *input);
+
+struct variable *parse_variable(char *input);
 
 #endif // INPUT_H_2C6A9CFE_83FE_4419_BEFD_E4B888681E1D

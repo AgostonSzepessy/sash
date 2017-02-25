@@ -33,4 +33,13 @@ char *get_username();
  */
 char *get_hostname();
 
+/**
+ * @brief trim_str Removes whitespace from both ends of the string. IMPORTANT:
+ * The string must by dynamically allocated, because a new string will be
+ * allocated that does not contain any whitespace in it.
+ * @param input String to remove whitespace from
+ * @return char array with whitespace removed
+ */
+char *strip_str(char *input);
+
 #endif // UTIL_H_70F35D73_713A_4829_B884_0C27C325FE24
